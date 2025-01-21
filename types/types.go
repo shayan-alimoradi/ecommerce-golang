@@ -5,7 +5,7 @@ import "time"
 type UserStore interface {
 	GetUserByEmail(email string) (*User, error)
 	CreateUser(User) error
-	// GetUserByID(id int) (*User, error)
+	GetUserByID(id int) (*User, error)
 }
 
 type User struct {
@@ -20,6 +20,6 @@ type User struct {
 type RegisterUserPayload struct {
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
+	Email     string `json:"email" validate:"required,email"`
+	Password  string `json:"password" validate:"required,min=3,max=150"`
 }
