@@ -49,10 +49,9 @@ func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {
 
 	// if it doesn't we create the new user
 	err = h.store.CreateUser(types.User{
-		FirstName: payload.FirstName,
-		LastName:  payload.LastName,
-		Email:     payload.Email,
-		Password:  payload.Password,
+		Username: payload.Username,
+		Email:    payload.Email,
+		Password: payload.Password,
 	})
 	if err != nil {
 		utils.WriteError(w, http.StatusInternalServerError, err)

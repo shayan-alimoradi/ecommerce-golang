@@ -18,10 +18,9 @@ func TestUserServiceHandlers(t *testing.T) {
 	t.Run("should fail if the user payload is invalid",
 		func(t *testing.T) {
 			payload := types.RegisterUserPayload{
-				FirstName: "Conor",
-				LastName:  "McGregor",
-				Email:     "",
-				Password:  "conor123",
+				Username: "Conor",
+				Email:    "",
+				Password: "conor123",
 			}
 			marshalled, _ := json.Marshal(payload)
 
@@ -46,10 +45,9 @@ func TestUserServiceHandlers(t *testing.T) {
 	t.Run("should correctly register the user",
 		func(t *testing.T) {
 			payload := types.RegisterUserPayload{
-				FirstName: "Conor",
-				LastName:  "McGregor",
-				Email:     "conor@email.com",
-				Password:  "conor123",
+				Username: "Conor",
+				Email:    "conor@email.com",
+				Password: "conor123",
 			}
 			marshalled, _ := json.Marshal(payload)
 
