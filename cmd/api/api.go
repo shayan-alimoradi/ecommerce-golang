@@ -29,7 +29,7 @@ func (s *APIServer) Run() error {
 
 	productStore := product.NewStore(s.db)
 	productHandler := product.NewHandler(productStore)
-	productHandler.RegisterRoutes(subrouter)
+	productHandler.ProductRoutes(subrouter)
 
 	log.Println("Listening on", s.addr)
 
