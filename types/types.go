@@ -8,6 +8,10 @@ type UserStore interface {
 	GetUserByID(id int) (*User, error)
 }
 
+type ProductStore interface {
+	GetProducts() ([]Product, error)
+}
+
 type User struct {
 	ID        int       `json:"id"`
 	Username  string    `json:"username"`
@@ -25,4 +29,14 @@ type RegisterUserPayload struct {
 type LoginUserPayload struct {
 	Email    string `json:"email" validate:"required,email"`
 	Password string `json:"password" validate:"required"`
+}
+
+type Product struct {
+	ID          int       `json:"id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Image       string    `json:"image"`
+	Price       float64   `json:"price"`
+	Quantity    int       `json:"quantity"`
+	CreatedAt   time.Time `json:"created_at"`
 }
