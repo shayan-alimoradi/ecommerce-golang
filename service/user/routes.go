@@ -5,6 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/shayan-alimoradi/ecommerce-golang/config"
+	"github.com/shayan-alimoradi/ecommerce-golang/service/auth"
 	"github.com/shayan-alimoradi/ecommerce-golang/types"
 	"github.com/shayan-alimoradi/ecommerce-golang/utils"
 )
@@ -24,7 +26,35 @@ func (h *Handler) RegisterRoutes(router *mux.Router) {
 }
 
 func (h *Handler) handleLogin(w http.ResponseWriter, r *http.Request) {
+	var payload types.LoginUserPayload
+	if err := utils.ParseJSON(r, &payload); err != nil {
+		utils.WriteError(w, http.StatusBadRequest, err)
+		return
+	}
 
+	u, err := h.store.GetUserByEmail(payload.Email)
+	if err != nil {
+		utils.WriteError(w, http.StatusBadRequest, fmt.Errorf(
+			"invalid email or password"),
+		)
+		return
+	}
+
+	if u.Password != payload.Password {
+		utils.WriteError(w, http.StatusBadRequest, fmt.Errorf(
+			"invalid email or password"),
+		)
+		return
+	}
+
+	secret := []byte(config.Envs.JWTSecret)
+	token, err := auth.CreateJWT(secret, u.ID)
+	if err != nil {
+		utils.WriteError(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	utils.WriteJSON(w, http.StatusOK, map[string]string{"token": token})
 }
 
 func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {

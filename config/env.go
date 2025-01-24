@@ -7,6 +7,7 @@ type DBConfig struct {
 	MaxOpenConns string
 	MaxIdleConns string
 	MaxIdleTime  string
+	JWTSecret    string
 }
 
 var Envs = initConfig()
@@ -17,6 +18,7 @@ func initConfig() DBConfig {
 		MaxOpenConns: getEnv("DB_MAX_OPEN_CONNS", "30"),
 		MaxIdleConns: getEnv("DB_MAX_IDLE_CONNS", "30"),
 		MaxIdleTime:  getEnv("DB_MAX_IDLE_TIME", "15m"),
+		JWTSecret:    getEnv("JWT_SECRET", "sample-jwt-secret"),
 	}
 }
 
