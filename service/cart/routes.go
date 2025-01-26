@@ -15,8 +15,8 @@ type Handler struct {
 	userStore    types.UserStore
 }
 
-func NewHandler(store types.OrderStore, productStore types.ProductStore) *Handler {
-	return &Handler{store: store, productStore: productStore}
+func NewHandler(store types.OrderStore, productStore types.ProductStore, userStore types.UserStore) *Handler {
+	return &Handler{store: store, productStore: productStore, userStore: userStore}
 }
 
 func (h *Handler) RegisterRoutes(router *mux.Router) {
